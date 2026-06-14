@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class QuestionRequest(BaseModel):
-    question: str
+class ExplainRequest(BaseModel):
+    topic: str
     language: str
     grade: str

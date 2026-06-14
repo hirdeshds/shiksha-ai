@@ -1,32 +1,33 @@
 from app.core.cohere_client import co
-import json
 
 def generate_quiz(topic):
 
     prompt = f"""
-    Create 3 multiple choice questions on:
+Generate 5 MCQs about:
 
-    {topic}
+{topic}
 
-    Return ONLY valid JSON.
+Return JSON only.
 
-    Example:
+Format:
 
-    [
-      {{
-        "question":"What is photosynthesis?",
-        "options":["A","B","C","D"],
-        "correct":"A"
-      }}
-    ]
-    """
+{{
+ "questions":[
+   {{
+      "question":"",
+      "options":["","","",""],
+      "answer":""
+   }}
+ ]
+}}
+"""
 
     response = co.chat(
         model="command-a-plus-05-2026",
         messages=[
             {
-                "role":"user",
-                "content":prompt
+                "role": "user",
+                "content": prompt
             }
         ]
     )
@@ -35,4 +36,4 @@ def generate_quiz(topic):
         if item.type == "text":
             return item.text
 
-    return "[]"
+    return "{}"

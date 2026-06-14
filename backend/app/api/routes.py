@@ -1,31 +1,47 @@
 from fastapi import APIRouter
-from app.schemas.question import QuestionRequest
-from app.services.ai_service import generate_answer
+
+from app.schemas.question import ExplainRequest
 from app.schemas.quiz import QuizRequest
+from app.schemas.command import CommandRequest
+
+from app.services.ai_service import explain_topic
 from app.services.quiz_service import generate_quiz
+from app.services.command_service import parse_command
 
 router = APIRouter()
 
-@router.post("/ask")
-def ask_question(data: QuestionRequest):
+@router.post("/explain")
+def explain(data: ExplainRequest):
 
-    answer = generate_answer(
-        data.question,
+    result = explain_topic(
+        data.topic,
         data.language,
         data.grade
     )
 
     return {
         "success": True,
-        "answer": answer
+        "data": result
     }
 
-@router.post("/quiz")
-def create_quiz(data: QuizRequest):
 
-    quiz = generate_quiz(data.topic)
+@router.post("/quiz")
+def quiz(data: QuizRequest):
 
     return {
         "success": True,
-        "quiz": quiz
+        "data": generate_quiz(
+            data.topic
+        )
+    }
+
+
+@router.post("/command")
+def command(data: CommandRequest):
+
+    result = parse_command(data.text)
+
+    return {
+        "success": True,
+        "data": result
     }

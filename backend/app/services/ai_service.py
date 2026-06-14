@@ -1,21 +1,21 @@
 from app.core.cohere_client import co
 
-def generate_answer(question, language, grade):
+def explain_topic(topic, language, grade):
 
     prompt = f"""
-    You are an AI teacher for government school students.
+    You are a teaching assistant in a Haryana government school.
 
-    Explain the following question for a Class {grade} student.
-
+    Topic: {topic}
+    Class: {grade}
     Language: {language}
 
-    Question:
-    {question}
-
     Rules:
-    - Use simple language
-    - Give examples
-    - Keep answer under 200 words
+    - If language is Hindi, answer in Hindi.
+    - If language is English, answer in English.
+    - If language is Hinglish, mix Hindi and English naturally.
+    - Use simple language.
+    - Use classroom examples.
+    - Keep answer under 150 words.
     """
 
     response = co.chat(
