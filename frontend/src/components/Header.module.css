@@ -1,0 +1,181 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  z-index: 100;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.logoText {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-inverse);
+  letter-spacing: -0.5px;
+}
+
+.logoSubtext {
+  font-size: 0.65rem;
+  color: var(--text-inverse-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: -2px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.selectLabel {
+  font-size: 0.75rem;
+  color: var(--text-inverse-muted);
+  font-weight: 500;
+}
+
+.select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-pill);
+  color: var(--text-inverse);
+  padding: 0.4rem 2rem 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  transition: all 0.2s ease;
+  cursor: none;
+}
+
+.select:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.select option {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.statusDot[data-offline="true"] {
+  background: var(--danger);
+}
+
+.statusWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-inverse-muted);
+}
+
+.modeBadge {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  background: transparent;
+  color: var(--text-inverse);
+  cursor: none;
+}
+
+.modeBadge[data-active="true"] {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(237, 3, 49, 0.4);
+}
+
+.modeBadge:not([data-active="true"]):hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modeToggle {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+    flex-wrap: wrap;
+    height: auto;
+    position: absolute;
+    /* Keep it absolute so it doesn't push down hero content weirdly */
+    background: transparent;
+  }
+
+  .logoText {
+    font-size: 1.25rem;
+  }
+
+  .logoIcon {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .controls {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .statusWrapper span {
+    display: none;
+    /* Hide 'Online' text on mobile to save space */
+  }
+}

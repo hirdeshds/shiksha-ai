@@ -1,0 +1,279 @@
+/* ===================================
+   SHIKSHA AI — MASAI DESIGN SYSTEM
+   Premium Light Interactive Theme
+   =================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+/* ===== CSS Custom Properties ===== */
+:root {
+  /* Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FFFAFB;
+  --bg-card: #FFFFFF;
+
+  --bg-dark: #0A0103;
+  /* Hero/Header background */
+
+  --primary: #ED0331;
+  /* Masai Red */
+  --primary-light: #F6D9DF;
+  --primary-dark: #C90026;
+
+  --accent: #F6EDE7;
+  /* Light button hover */
+
+  --success: #10b981;
+  --success-light: #d1fae5;
+
+  --danger: #ef4444;
+
+  /* Text on light backgrounds */
+  --text-primary: #0A0103;
+  --text-secondary: #4A4A4A;
+  --text-muted: #888384;
+
+  /* Text on dark backgrounds */
+  --text-inverse: #FFFFFF;
+  --text-inverse-muted: rgba(255, 255, 255, 0.7);
+
+  /* Typography */
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Poppins", sans-serif;
+
+  /* Spacing & Borders */
+  --header-height: 80px;
+  --border-light: #E4E4E4;
+
+  /* Radii */
+  --radius-card: 48px;
+  --radius-subcard: 24px;
+  --radius-pill: 999px;
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Hide default cursor to use CustomCursor */
+  cursor: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ===== Typography ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-body);
+  /* Ensure buttons have pointer cursor fallback for touch devices */
+}
+
+@media (hover: none) {
+
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
+  }
+
+  button,
+  a {
+    cursor: pointer !important;
+  }
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cccccc;
+}
+
+/* ===== Selection ===== */
+::selection {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+/* ===== Main Content Area ===== */
+.mainContent {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* The dark hero section at the top */
+.heroContainer {
+  background: var(--bg-dark);
+  color: var(--text-inverse);
+  padding: calc(var(--header-height) + 4rem) 2rem 6rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: -100px;
+  /* Overlap with cards below */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+.mainContent:not([data-has-content="true"]) .heroContainer {
+  min-height: 100vh;
+  margin-bottom: 0;
+}
+
+.mainContent:not([data-has-content="true"]) .dashboard {
+  display: none;
+  /* Hide empty dashboard to prevent white space scroll */
+}
+
+/* Subtle grid overlay on hero */
+.heroContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  animation: fadeInDown 0.8s ease;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text-inverse);
+  letter-spacing: -1px;
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  color: var(--text-inverse-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  z-index: 10;
+  /* Above the hero dark bg */
+}
+
+/* ===== Display Area ===== */
+.displayArea {
+  width: 100%;
+  max-width: 900px;
+  min-height: 100px;
+  margin-top: 2rem;
+}
+
+/* ===== Utility Animations ===== */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 0 1rem 2rem;
+  }
+
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+
+  .heroContainer {
+    padding: calc(var(--header-height) + 2rem) 1rem 4rem;
+  }
+
+  .mainContent:not([data-has-content="true"]) .heroContainer {
+    padding-top: calc(var(--header-height) + 6rem);
+    /* Push content down on mobile empty state */
+  }
+
+  :root {
+    --radius-card: 24px;
+  }
+}

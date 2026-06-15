@@ -1,0 +1,217 @@
+.explanationCard {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem;
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  transition: box-shadow 0.3s ease;
+}
+
+.explanationCard:hover {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+}
+
+/* The red hover expansion effect from Masai */
+.explanationCard::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 150%;
+  height: 150%;
+  background: var(--bg-secondary);
+  border-radius: 50%;
+  transform: scale(0) translate(50%, 50%);
+  transform-origin: bottom right;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.explanationCard:hover::before {
+  transform: scale(1) translate(20%, 20%);
+}
+
+.cardContent {
+  position: relative;
+  z-index: 1;
+  transform: translateZ(30px);
+  /* Pushes content forward for 3D effect */
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.topicSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topicIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-subcard);
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.topicName {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badge {
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.langBadge {
+  background: var(--bg-secondary);
+  color: var(--primary);
+  border: 1px solid var(--primary-light);
+}
+
+.gradeBadge {
+  background: var(--success-light);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.explanationText {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  min-height: 100px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.2em;
+  background: var(--primary);
+  margin-left: 4px;
+  vertical-align: text-bottom;
+  animation: blink 0.7s ease-in-out infinite;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.speakBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: none;
+}
+
+.speakBtn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(237, 3, 49, 0.15);
+}
+
+.speakBtn[data-speaking="true"] {
+  background: var(--primary-dark);
+  color: white;
+  border-color: transparent;
+}
+
+.dismissBtn {
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-light);
+  background: white;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: none;
+}
+
+.dismissBtn:hover {
+  background: #f8f8f8;
+  color: var(--text-secondary);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .explanationCard {
+    padding: 1.5rem;
+  }
+
+  .topicName {
+    font-size: 1.4rem;
+  }
+
+  .explanationText {
+    font-size: 1.05rem;
+  }
+}

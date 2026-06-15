@@ -1,0 +1,238 @@
+.voiceSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0;
+  z-index: 20;
+}
+
+.magneticArea {
+  padding: 2rem;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animated rings around the mic button */
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(237, 3, 49, 0.2);
+  animation: ringPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.ring1 {
+  width: 150px;
+  height: 150px;
+  animation-delay: 0s;
+}
+
+.ring2 {
+  width: 190px;
+  height: 190px;
+  animation-delay: 0.5s;
+}
+
+.ring3 {
+  width: 230px;
+  height: 230px;
+  animation-delay: 1s;
+}
+
+.ring[data-listening="true"] {
+  border-color: rgba(237, 3, 49, 0.5);
+  animation: ringPulseActive 1.2s ease-in-out infinite;
+}
+
+.micButton {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: none;
+  cursor: none;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(237, 3, 49, 0.3);
+  color: white;
+}
+
+.micButton[data-state="idle"] {
+  background: var(--primary);
+}
+
+.micButton[data-state="listening"] {
+  background: var(--primary-dark);
+  box-shadow: 0 0 50px rgba(237, 3, 49, 0.6);
+  transform: scale(1.05);
+}
+
+.micButton[data-state="processing"] {
+  background: #f59e0b;
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
+  animation: processingPulse 1s ease-in-out infinite;
+}
+
+.micButton:hover {
+  transform: scale(1.08);
+  box-shadow: 0 15px 40px rgba(237, 3, 49, 0.4);
+}
+
+.micButton:active {
+  transform: scale(0.95);
+}
+
+.micIcon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.processingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.statusText {
+  font-size: 1rem;
+  color: var(--text-inverse-muted);
+  text-align: center;
+  min-height: 1.5em;
+  font-weight: 500;
+}
+
+.statusText[data-listening="true"] {
+  color: #FFFFFF;
+}
+
+.statusText[data-processing="true"] {
+  color: #f59e0b;
+}
+
+.transcript {
+  max-width: 600px;
+  text-align: center;
+  padding: 1.2rem 2rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-inverse);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease;
+}
+
+.transcriptCursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: var(--primary);
+  margin-left: 4px;
+  animation: blink 0.8s ease-in-out infinite;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--text-inverse-muted);
+  text-align: center;
+  opacity: 0.8;
+  max-width: 400px;
+}
+
+@keyframes processingPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes ringPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.5;
+  }
+}
+
+@keyframes ringPulseActive {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}

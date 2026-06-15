@@ -34,6 +34,15 @@ Format:
 
     for item in response.message.content:
         if item.type == "text":
-            return item.text
+            try:
+                raw_text = item.text
+                start_idx = raw_text.find('{')
+                end_idx = raw_text.rfind('}')
+                if start_idx != -1 and end_idx != -1:
+                    json_str = raw_text[start_idx:end_idx+1]
+                    return json.loads(json_str)
+                return json.loads(raw_text)
+            except Exception:
+                return {"questions": []}
 
-    return "{}"
+    return {"questions": []}

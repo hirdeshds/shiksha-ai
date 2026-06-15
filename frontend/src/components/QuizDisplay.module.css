@@ -1,0 +1,462 @@
+.quizContainer {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Progress bar */
+.progressSection {
+  margin-bottom: 1.5rem;
+}
+
+.progressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.progressLabel {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.scoreLabel {
+  font-size: 0.9rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: var(--border-light);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: var(--radius-pill);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Question card */
+.questionCard {
+  padding: 3rem;
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  transform-style: preserve-3d;
+  transition: box-shadow 0.3s ease;
+}
+
+.questionCard:hover {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+}
+
+.cardContent {
+  position: relative;
+  z-index: 1;
+  transform: translateZ(20px);
+}
+
+.questionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.questionNumber {
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* Timer */
+.timer {
+  position: relative;
+  width: 52px;
+  height: 52px;
+}
+
+.timerSvg {
+  transform: rotate(-90deg);
+  width: 52px;
+  height: 52px;
+}
+
+.timerBg {
+  fill: none;
+  stroke: var(--border-light);
+  stroke-width: 4;
+}
+
+.timerFill {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+}
+
+.timerText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.timerText[data-warning="true"] {
+  color: var(--danger);
+  animation: timerPulse 0.5s ease-in-out infinite;
+}
+
+.questionText {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.5px;
+}
+
+/* Options grid */
+.optionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.optionBtn {
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-subcard);
+  border: 2px solid var(--border-light);
+  background: white;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.optionBtn:hover:not(:disabled) {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(237, 3, 49, 0.15);
+}
+
+/* Ripple effect container inside button */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: rippleAnim 0.6s linear;
+  background-color: rgba(237, 3, 49, 0.2);
+  pointer-events: none;
+}
+
+.optionBtn:disabled {
+  cursor: default;
+}
+
+.optionLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.optionBtn:hover:not(:disabled) .optionLabel {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.optionContent {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  /* above ripple */
+}
+
+/* Correct answer */
+.optionBtn[data-result="correct"] {
+  border-color: var(--success);
+  background: var(--success-light);
+  color: #064e3b;
+  animation: correctPulse 0.5s ease;
+}
+
+.optionBtn[data-result="correct"] .optionLabel {
+  background: var(--success);
+  color: white;
+}
+
+/* Wrong answer */
+.optionBtn[data-result="wrong"] {
+  border-color: var(--danger);
+  background: #fee2e2;
+  color: #7f1d1d;
+  animation: wrongShake 0.5s ease;
+}
+
+.optionBtn[data-result="wrong"] .optionLabel {
+  background: var(--danger);
+  color: white;
+}
+
+/* Show correct when user chose wrong */
+.optionBtn[data-result="reveal"] {
+  border-color: var(--success);
+  background: #f0fdf4;
+}
+
+.optionBtn[data-result="reveal"] .optionLabel {
+  background: var(--success);
+  color: white;
+}
+
+/* Results card */
+.resultsCard {
+  padding: 4rem 3rem;
+  border-radius: var(--radius-card);
+  background: white;
+  border: 1px solid var(--border-light);
+  text-align: center;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.resultsCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: var(--primary);
+}
+
+.resultsEmoji {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.resultsTitle {
+  font-size: 2.5rem;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.resultsScore {
+  font-size: 4rem;
+  font-weight: 800;
+  margin: 1rem 0;
+  color: var(--primary);
+}
+
+.resultsSubtext {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  font-weight: 500;
+}
+
+.resultsActions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.retryBtn {
+  padding: 1rem 2.5rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: none;
+  box-shadow: 0 10px 25px rgba(237, 3, 49, 0.3);
+}
+
+.retryBtn:hover {
+  transform: translateY(-2px);
+  background: var(--primary-dark);
+  box-shadow: 0 15px 35px rgba(237, 3, 49, 0.4);
+}
+
+.closeBtn {
+  padding: 1rem 2.5rem;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--border-light);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: none;
+}
+
+.closeBtn:hover {
+  background: #f8f8f8;
+  border-color: #cccccc;
+}
+
+/* Confetti */
+.confettiContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.confettiPiece {
+  position: absolute;
+  top: -20px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes correctPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes wrongShake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-10px);
+  }
+
+  40% {
+    transform: translateX(10px);
+  }
+
+  60% {
+    transform: translateX(-5px);
+  }
+
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes bounceIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes timerPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes rippleAnim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .optionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .questionCard {
+    padding: 1.5rem;
+  }
+
+  .questionText {
+    font-size: 1.25rem;
+  }
+
+  .resultsCard {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .resultsScore {
+    font-size: 3rem;
+  }
+}
