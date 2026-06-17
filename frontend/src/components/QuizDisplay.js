@@ -55,6 +55,17 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
   const questions = quizData?.questions || [];
   const currentQuestion = questions[currentIndex];
 
+  // Reset state when new quiz data is received (e.g. on Try Again)
+  useEffect(() => {
+    setCurrentIndex(0);
+    setScore(0);
+    setSelectedOption(null);
+    setShowResult(false);
+    setIsFinished(false);
+    setTimeLeft(TIMER_SECONDS);
+    setShowConfetti(false);
+  }, [quizData]);
+
   useEffect(() => {
     if (isFinished || showResult) return;
 
