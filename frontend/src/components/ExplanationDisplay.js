@@ -15,17 +15,20 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
   // Apply 3D tilt effect
   const cardRef = useTilt({ max: 8, scale: 1.01 });
 
+  const explanationText = typeof explanation === 'string' ? explanation : (explanation?.text || "");
+  const imageUrl = typeof explanation === 'string' ? null : (explanation?.image_url || null);
+
   // Typewriter effect
   useEffect(() => {
-    if (!explanation) return;
+    if (!explanationText) return;
 
     setDisplayedText("");
     indexRef.current = 0;
     setIsTyping(true);
 
     const interval = setInterval(() => {
-      if (indexRef.current < explanation.length) {
-        setDisplayedText(explanation.slice(0, indexRef.current + 1));
+      if (indexRef.current < explanationText.length) {
+        setDisplayedText(explanationText.slice(0, indexRef.current + 1));
         indexRef.current++;
       } else {
         setIsTyping(false);
@@ -34,14 +37,14 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
     }, 18);
 
     return () => clearInterval(interval);
-  }, [explanation]);
+  }, [explanationText]);
 
   const handleSpeak = () => {
     if (isSpeaking) {
       stop();
     } else {
       const lang = language === "Hindi" ? "hi-IN" : language === "English" ? "en-IN" : "hi-IN";
-      speak(explanation, lang);
+      speak(explanationText, lang);
     }
   };
 
@@ -78,6 +81,12 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
             </span>
           </div>
         </div>
+
+        {imageUrl && (
+          <div className={styles.imageContainer}>
+            <img src={imageUrl} alt={topic} className={styles.topicImage} />
+          </div>
+        )}
 
         <div className={styles.explanationText}>
           {displayedText}

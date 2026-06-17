@@ -71,9 +71,10 @@ export default function Home() {
         }
       } catch (error) {
         console.error("Command processing failed:", error);
-        setExplanation(
-          "⚠️ Sorry, something went wrong. Please check if the backend is running and try again."
-        );
+        setExplanation({
+          text: "⚠️ Sorry, something went wrong. Please check if the backend is running and try again.",
+          image_url: null
+        });
         setExplanationMeta({ topic: "Error", language, grade });
       } finally {
         setIsProcessing(false);

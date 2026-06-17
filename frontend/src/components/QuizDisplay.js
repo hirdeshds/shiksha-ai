@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTilt } from "@/hooks/useTilt";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import styles from "./QuizDisplay.module.css";
 
 const TIMER_SECONDS = 15;
@@ -51,6 +52,7 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
   const timerRef = useRef(null);
   const cardRef = useTilt({ max: 5, scale: 1.01 });
   const { playPop, playCorrect, playWrong } = useSoundEffects();
+  const { speak, stop } = useSpeechSynthesis();
 
   const questions = quizData?.questions || [];
   const currentQuestion = questions[currentIndex];
@@ -64,7 +66,34 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
     setIsFinished(false);
     setTimeLeft(TIMER_SECONDS);
     setShowConfetti(false);
-  }, [quizData]);
+    stop(); // Stop any ongoing speech
+  }, [quizData, stop]);
+
+  // Read question and options aloud
+  useEffect(() => {
+    stop(); // Always stop previous speech when state changes
+
+    if (isFinished || showResult || !currentQuestion) return;
+
+    const labels = ["A", "B", "C", "D"];
+    let textToSpeak = `Question ${currentIndex + 1}. ${currentQuestion.question}. `;
+    if (currentQuestion.options) {
+      currentQuestion.options.forEach((opt, idx) => {
+        textToSpeak += `Option ${labels[idx]}: ${opt}. `;
+      });
+    }
+
+    const timeout = setTimeout(() => {
+      speak(textToSpeak, "en-IN"); // Reading in English/Hinglish
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [currentIndex, currentQuestion, isFinished, showResult, speak, stop]);
+
+  // Cleanup speech on unmount
+  useEffect(() => {
+    return () => stop();
+  }, [stop]);
 
   useEffect(() => {
     if (isFinished || showResult) return;
