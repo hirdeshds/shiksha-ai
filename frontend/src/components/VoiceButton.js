@@ -6,7 +6,7 @@ import styles from "./VoiceButton.module.css";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 export default function VoiceButton({ onCommand, isProcessing, language }) {
-  const recognitionLang = language === "Hindi" ? "hi-IN" : language === "English" ? "en-IN" : "hi-IN";
+  const recognitionLang = language === "Hindi" ? "hi-IN" : "en-IN";
 
   const {
     isListening,

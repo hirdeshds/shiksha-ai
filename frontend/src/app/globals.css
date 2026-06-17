@@ -144,30 +144,17 @@ button {
   min-height: 100vh;
 }
 
-/* The dark hero section at the top */
+/* The dark hero section — now full height with split layout */
 .heroContainer {
   background: var(--bg-dark);
   color: var(--text-inverse);
-  padding: calc(var(--header-height) + 4rem) 2rem 6rem;
-  text-align: center;
+  padding: calc(var(--header-height) + 1rem) 3rem 2rem;
   position: relative;
   overflow: hidden;
-  margin-bottom: -100px;
-  /* Overlap with cards below */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  transition: all 0.5s ease;
-}
-
-.mainContent:not([data-has-content="true"]) .heroContainer {
   min-height: 100vh;
-  margin-bottom: 0;
-}
-
-.mainContent:not([data-has-content="true"]) .dashboard {
-  display: none;
-  /* Hide empty dashboard to prevent white space scroll */
+  transition: all 0.5s ease;
 }
 
 /* Subtle grid overlay on hero */
@@ -190,45 +177,125 @@ button {
   position: relative;
   z-index: 2;
   animation: fadeInDown 0.8s ease;
-  max-width: 800px;
-  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
 }
 
 .heroTitle {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: 800;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: var(--text-inverse);
   letter-spacing: -1px;
 }
 
 .heroSubtitle {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: var(--text-inverse-muted);
   max-width: 600px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
-.dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem 4rem;
+/* ===== Split Layout ===== */
+.splitLayout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 2.5rem;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+}
+
+.splitLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Decorative glow behind mic */
+.splitLeft::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(237, 3, 49, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.splitRight {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  align-self: stretch;
+  position: relative;
+  overflow-y: auto;
+  padding: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.splitRight::-webkit-scrollbar {
+  width: 6px;
+}
+
+.splitRight::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+}
+
+/* ===== Output Placeholder (empty state) ===== */
+.outputPlaceholder {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  justify-content: center;
+  text-align: center;
+  border: 1.5px dashed rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  padding: 3rem 2rem;
   position: relative;
-  z-index: 10;
-  /* Above the hero dark bg */
+  overflow: hidden;
+  animation: fadeIn 0.6s ease;
 }
 
-/* ===== Display Area ===== */
-.displayArea {
-  width: 100%;
-  max-width: 900px;
-  min-height: 100px;
-  margin-top: 2rem;
+.placeholderIcon {
+  font-size: 3rem;
+  margin-bottom: 1.2rem;
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+.placeholderTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-inverse);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.3px;
+}
+
+.placeholderText {
+  font-size: 0.95rem;
+  color: var(--text-inverse-muted);
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+.placeholderPulse {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid rgba(237, 3, 49, 0.15);
+  animation: placeholderPulseAnim 3s ease-in-out infinite;
+  pointer-events: none;
 }
 
 /* ===== Utility Animations ===== */
@@ -254,23 +321,65 @@ button {
   }
 }
 
+@keyframes floatIcon {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes placeholderPulseAnim {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.01);
+  }
+}
+
 /* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .splitLayout {
+    grid-template-columns: 320px 1fr;
+    gap: 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
-  .dashboard {
-    padding: 0 1rem 2rem;
+  .heroContainer {
+    padding: calc(var(--header-height) + 1.5rem) 1rem 1.5rem;
+    min-height: auto;
   }
 
   .heroTitle {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 
-  .heroContainer {
-    padding: calc(var(--header-height) + 2rem) 1rem 4rem;
+  .splitLayout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
-  .mainContent:not([data-has-content="true"]) .heroContainer {
-    padding-top: calc(var(--header-height) + 6rem);
-    /* Push content down on mobile empty state */
+  .splitLeft {
+    padding: 1rem 0;
+  }
+
+  .splitRight {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .outputPlaceholder {
+    padding: 2rem 1.5rem;
+    min-height: 200px;
   }
 
   :root {

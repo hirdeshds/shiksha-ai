@@ -137,7 +137,7 @@ export default function Home() {
       />
 
       <main className="mainContent" data-has-content={!!(explanation || quizData)}>
-        {/* Dark Hero Section */}
+        {/* Dark Hero Section — Split Layout */}
         <section className="heroContainer">
           <div className="heroContent">
             <h1 className="heroTitle">
@@ -147,41 +147,53 @@ export default function Home() {
               Voice-powered teaching assistant for smart classrooms. Just speak
               — AI samjhayega! 🎙️
             </p>
+          </div>
 
-            {/* Voice Command Hub inside hero */}
-            <div style={{ marginTop: "4rem" }}>
+          {/* Two-panel split: Mic left, Output right */}
+          <div className="splitLayout">
+            <div className="splitLeft">
               <VoiceButton
                 onCommand={handleCommand}
                 isProcessing={isProcessing}
                 language={language}
               />
             </div>
+
+            <div className="splitRight" id="display-area">
+              {explanation || quizData ? (
+                <>
+                  {explanation && (
+                    <ExplanationDisplay
+                      explanation={explanation}
+                      topic={explanationMeta.topic}
+                      language={explanationMeta.language}
+                      grade={explanationMeta.grade}
+                      onDismiss={dismissExplanation}
+                    />
+                  )}
+
+                  {quizData && (
+                    <QuizDisplay
+                      quizData={quizData}
+                      topic={quizTopic}
+                      onDismiss={dismissQuiz}
+                      onRetry={handleQuizRetry}
+                    />
+                  )}
+                </>
+              ) : (
+                <div className="outputPlaceholder">
+                  <div className="placeholderIcon">💡</div>
+                  <h3 className="placeholderTitle">AI Response</h3>
+                  <p className="placeholderText">
+                    Ask a question using the mic and the answer will appear here
+                  </p>
+                  <div className="placeholderPulse" />
+                </div>
+              )}
+            </div>
           </div>
         </section>
-
-        {/* Light Content Section */}
-        <div className="dashboard">
-          <div className="displayArea" id="display-area">
-            {explanation && (
-              <ExplanationDisplay
-                explanation={explanation}
-                topic={explanationMeta.topic}
-                language={explanationMeta.language}
-                grade={explanationMeta.grade}
-                onDismiss={dismissExplanation}
-              />
-            )}
-
-            {quizData && (
-              <QuizDisplay
-                quizData={quizData}
-                topic={quizTopic}
-                onDismiss={dismissQuiz}
-                onRetry={handleQuizRetry}
-              />
-            )}
-          </div>
-        </div>
       </main>
 
       <SessionHistory history={history} onReplay={handleReplay} />
