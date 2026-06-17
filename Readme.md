@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎓 Shiksha AI
+#  Shiksha AI
 
 ### Voice-Powered AI Teaching Assistant for Smart Classrooms
 
@@ -14,33 +14,33 @@
 
 **Shiksha AI** is a production-grade, voice-first AI teaching assistant designed for Haryana government school classrooms. Teachers speak naturally — the AI explains concepts, generates quizzes, and reads aloud — all hands-free in **Hindi**, **English**, or **Hinglish**.
 
-[Getting Started](#-getting-started) · [Architecture](#-system-architecture) · [API Reference](#-api-reference) · [Deployment](#-deployment)
+[Getting Started](#getting-started) · [Architecture](#system-architecture) · [API Reference](#api-reference) · [Deployment](#deployment)
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [Overview](#-overview)
-- [Core Architecture & Innovations](#-core-architecture--innovations)
-- [System Design](#-system-design)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [API Reference](#-api-reference)
-- [Frontend Component Architecture](#-frontend-component-architecture)
-- [Custom Hooks Reference](#-custom-hooks-reference)
-- [Design System](#-design-system)
-- [Deployment](#-deployment)
-- [Performance Considerations](#-performance-considerations)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [Overview](#overview)
+- [Core Architecture & Innovations](#core-architecture--innovations)
+- [System Design](#system-design)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [API Reference](#api-reference)
+- [Frontend Component Architecture](#frontend-component-architecture)
+- [Custom Hooks Reference](#custom-hooks-reference)
+- [Design System](#design-system)
+- [Deployment](#deployment)
+- [Performance Considerations](#performance-considerations)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## 🌟 Overview
+## Overview
 
 ### Problem Statement
 
@@ -54,29 +54,29 @@ Shiksha AI removes these barriers with a **voice-first interface**. A teacher si
 
 | Feature | Description |
 |---------|-------------|
-| 🎙️ **Voice Command Interface** | Browser-native Web Speech API with silence detection and real-time transcript display |
-| 🧠 **AI-Powered Explanations** | Cohere Command A+ generates grade-appropriate, multilingual explanations |
-| 📝 **Interactive Quiz Generation** | Auto-generated MCQs with timer, scoring, confetti animations, and sound feedback |
-| 🌐 **Trilingual Support** | Full support for Hindi, English, and Hinglish (code-mixed) |
-| 🔊 **Text-to-Speech Readback** | Browser Speech Synthesis API reads explanations aloud in the correct language |
-| 📜 **Session History** | Slide-out sidebar tracks all commands with one-click replay |
-| 🎨 **Premium UI/UX** | Magnetic buttons, 3D tilt cards, custom cursor, waveform visualizer, and micro-animations |
-| 🏥 **Health Monitoring** | Real-time backend connectivity status with auto-polling |
+| **Voice Command Interface** | Browser-native Web Speech API with silence detection and real-time transcript display |
+| **AI-Powered Explanations** | Cohere Command A+ generates grade-appropriate, multilingual explanations |
+| **Interactive Quiz Generation** | Auto-generated MCQs with timer, scoring, confetti animations, and sound feedback |
+| **Trilingual Support** | Full support for Hindi, English, and Hinglish (code-mixed) |
+| **Text-to-Speech Readback** | Browser Speech Synthesis API reads explanations aloud in the correct language |
+| **Session History** | Slide-out sidebar tracks all commands with one-click replay |
+| **Premium UI/UX** | Magnetic buttons, 3D tilt cards, custom cursor, waveform visualizer, and micro-animations |
+| **Health Monitoring** | Real-time backend connectivity status with auto-polling |
 
 ---
 
-## 🏗️ Core Architecture & Innovations
+## Core Architecture & Innovations
 
 ### 1. Voice-First NLU Pipeline
 
 Shiksha AI implements a three-stage voice processing pipeline that converts raw speech into structured educational actions:
 
 ```
-┌──────────────┐     ┌──────────────────┐     ┌─────────────────┐     ┌──────────────┐
-│  Web Speech  │────▶│  NLU Command     │────▶│  AI Content     │────▶│  Speech      │
-│  Recognition │     │  Parser (Cohere) │     │  Generation     │     │  Synthesis   │
-│  (Browser)   │     │  (Backend)       │     │  (Backend)      │     │  (Browser)   │
-└──────────────┘     └──────────────────┘     └─────────────────┘     └──────────────┘
+               
+  Web Speech    NLU Command       AI Content       Speech      
+  Recognition        Parser (Cohere)        Generation            Synthesis   
+  (Browser)          (Backend)              (Backend)             (Browser)   
+               
      STT               Intent Extraction        Explanation/Quiz          TTS
    (Client)              (Server)                 (Server)              (Client)
 ```
@@ -122,13 +122,13 @@ A deliberate architectural decision splits computation between client and server
 
 ---
 
-## 🧩 System Design
+## System Design
 
 ### High-Level System Diagram
 
 ```mermaid
 graph TB
-    subgraph Client ["🖥️ Frontend (Next.js 16 / React 19)"]
+    subgraph Client [" Frontend (Next.js 16 / React 19)"]
         UI[Page Component]
         VB[VoiceButton]
         ED[ExplanationDisplay]
@@ -141,7 +141,7 @@ graph TB
         UI -->|history| SH
     end
 
-    subgraph Server ["⚙️ Backend (FastAPI)"]
+    subgraph Server [" Backend (FastAPI)"]
         API[API Router]
         CS[CommandService]
         AS[AIService]  
@@ -152,7 +152,7 @@ graph TB
         API --> QS
     end
 
-    subgraph External ["☁️ External Services"]
+    subgraph External [" External Services"]
         CO[Cohere API<br/>command-a-plus]
     end
 
@@ -215,7 +215,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -249,92 +249,92 @@ sequenceDiagram
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 shiksha-ai/
-│
-├── 📄 Readme.md                          # This file
-│
-├── 🔧 backend/                           # FastAPI Backend Service
-│   ├── Dockerfile                        # Container configuration
-│   ├── requirements.txt                  # Python dependencies
-│   ├── .env                              # Environment secrets (git-ignored)
-│   ├── .gitignore
-│   │
-│   └── app/                              # Application package
-│       ├── main.py                       # FastAPI app entry point, CORS config
-│       │
-│       ├── api/
-│       │   └── routes.py                 # REST endpoint definitions (/explain, /quiz, /command)
-│       │
-│       ├── services/                     # Business logic layer
-│       │   ├── ai_service.py             # Topic explanation generation via Cohere
-│       │   ├── command_service.py        # NLU voice command parsing via Cohere
-│       │   └── quiz_service.py           # MCQ quiz generation via Cohere
-│       │
-│       ├── schemas/                      # Pydantic request/response models
-│       │   ├── command.py                # CommandRequest { text }
-│       │   ├── question.py               # ExplainRequest { topic, language, grade }
-│       │   └── quiz.py                   # QuizRequest { topic }
-│       │
-│       ├── core/                         # Configuration & clients
-│       │   ├── config.py                 # Environment variable loader
-│       │   └── cohere_client.py          # Cohere ClientV2 singleton
-│       │
-│       ├── models/
-│       │   └── history.py                # SQLAlchemy models (future: persist sessions)
-│       │
-│       └── database/
-│           └── database.py               # Database connection setup
-│
-└── 🎨 frontend/                          # Next.js Frontend Application
-    ├── package.json                      # Node dependencies & scripts
-    ├── next.config.mjs                   # Next.js configuration
-    ├── eslint.config.mjs                 # ESLint rules
-    ├── jsconfig.json                     # Path aliases (@/ → src/)
-    ├── .env.local                        # Frontend environment (API URL)
-    ├── .gitignore
-    │
-    ├── public/                           # Static assets
-    │   └── favicon.ico
-    │
-    └── src/
-        ├── app/                          # Next.js App Router
-        │   ├── layout.js                 # Root layout (metadata, custom cursor, fonts)
-        │   ├── page.js                   # Main page (state management, command orchestration)
-        │   ├── globals.css               # Global design tokens, split layout, animations
-        │   └── favicon.ico
-        │
-        ├── components/                   # UI Components (CSS Modules)
-        │   ├── Header.js                 # Navigation bar (mode toggle, language/grade selects, health status)
-        │   ├── Header.module.css
-        │   ├── VoiceButton.js            # Mic button with magnetic effect, rings, waveform
-        │   ├── VoiceButton.module.css
-        │   ├── WaveformVisualizer.js     # Real-time audio waveform animation
-        │   ├── WaveformVisualizer.module.css
-        │   ├── ExplanationDisplay.js     # Explanation card with typewriter, TTS, 3D tilt
-        │   ├── ExplanationDisplay.module.css
-        │   ├── QuizDisplay.js            # Quiz card with timer, scoring, confetti
-        │   ├── QuizDisplay.module.css
-        │   ├── SessionHistory.js         # Slide-out history sidebar with replay
-        │   ├── SessionHistory.module.css
-        │   ├── CustomCursor.js           # Custom dual-layer cursor (dot + outline)
-        │   └── CustomCursor.module.css
-        │
-        ├── hooks/                        # Custom React Hooks
-        │   ├── useVoiceRecognition.js    # Web Speech API wrapper with silence detection
-        │   ├── useSpeechSynthesis.js     # Text-to-speech with voice matching
-        │   ├── useSoundEffects.js        # Web Audio API procedural sounds
-        │   └── useTilt.js                # 3D perspective tilt effect
-        │
-        └── lib/
-            └── api.js                    # Backend API client (fetch wrappers)
+
+  Readme.md                          # This file
+
+  backend/                           # FastAPI Backend Service
+    Dockerfile                        # Container configuration
+    requirements.txt                  # Python dependencies
+    .env                              # Environment secrets (git-ignored)
+    .gitignore
+   
+    app/                              # Application package
+        main.py                       # FastAPI app entry point, CORS config
+       
+        api/
+           routes.py                 # REST endpoint definitions (/explain, /quiz, /command)
+       
+        services/                     # Business logic layer
+           ai_service.py             # Topic explanation generation via Cohere
+           command_service.py        # NLU voice command parsing via Cohere
+           quiz_service.py           # MCQ quiz generation via Cohere
+       
+        schemas/                      # Pydantic request/response models
+           command.py                # CommandRequest { text }
+           question.py               # ExplainRequest { topic, language, grade }
+           quiz.py                   # QuizRequest { topic }
+       
+        core/                         # Configuration & clients
+           config.py                 # Environment variable loader
+           cohere_client.py          # Cohere ClientV2 singleton
+       
+        models/
+           history.py                # SQLAlchemy models (future: persist sessions)
+       
+        database/
+            database.py               # Database connection setup
+
+  frontend/                          # Next.js Frontend Application
+     package.json                      # Node dependencies & scripts
+     next.config.mjs                   # Next.js configuration
+     eslint.config.mjs                 # ESLint rules
+     jsconfig.json                     # Path aliases (@/ → src/)
+     .env.local                        # Frontend environment (API URL)
+     .gitignore
+    
+     public/                           # Static assets
+        favicon.ico
+    
+     src/
+         app/                          # Next.js App Router
+            layout.js                 # Root layout (metadata, custom cursor, fonts)
+            page.js                   # Main page (state management, command orchestration)
+            globals.css               # Global design tokens, split layout, animations
+            favicon.ico
+        
+         components/                   # UI Components (CSS Modules)
+            Header.js                 # Navigation bar (mode toggle, language/grade selects, health status)
+            Header.module.css
+            VoiceButton.js            # Mic button with magnetic effect, rings, waveform
+            VoiceButton.module.css
+            WaveformVisualizer.js     # Real-time audio waveform animation
+            WaveformVisualizer.module.css
+            ExplanationDisplay.js     # Explanation card with typewriter, TTS, 3D tilt
+            ExplanationDisplay.module.css
+            QuizDisplay.js            # Quiz card with timer, scoring, confetti
+            QuizDisplay.module.css
+            SessionHistory.js         # Slide-out history sidebar with replay
+            SessionHistory.module.css
+            CustomCursor.js           # Custom dual-layer cursor (dot + outline)
+            CustomCursor.module.css
+        
+         hooks/                        # Custom React Hooks
+            useVoiceRecognition.js    # Web Speech API wrapper with silence detection
+            useSpeechSynthesis.js     # Text-to-speech with voice matching
+            useSoundEffects.js        # Web Audio API procedural sounds
+            useTilt.js                # 3D perspective tilt effect
+        
+         lib/
+             api.js                    # Backend API client (fetch wrappers)
 ```
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -421,23 +421,23 @@ npm run dev
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
 ### Backend (`backend/.env`)
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `COHERE_API_KEY` | ✅ | API key from [Cohere Dashboard](https://dashboard.cohere.com/api-keys) |
+| `COHERE_API_KEY` |  | API key from [Cohere Dashboard](https://dashboard.cohere.com/api-keys) |
 
 ### Frontend (`frontend/.env.local`)
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `NEXT_PUBLIC_API_URL` | ❌ | `http://127.0.0.1:8000` | Backend API base URL |
+| `NEXT_PUBLIC_API_URL` |  | `http://127.0.0.1:8000` | Backend API base URL |
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 ### Base URL
 
@@ -545,43 +545,43 @@ Generates 5 multiple-choice questions for a given topic.
 
 ---
 
-## 🧱 Frontend Component Architecture
+## Frontend Component Architecture
 
 ### Component Hierarchy
 
 ```
 RootLayout
-├── CustomCursor                    # Global custom cursor overlay
-└── Home (page.js)                  # Main application state manager
-    ├── Header                      # Navigation + controls
-    │   ├── Mode Toggle (Explain/Quiz)
-    │   ├── Language Selector
-    │   ├── Grade Selector
-    │   └── Health Status Indicator
-    │
-    ├── Split Layout
-    │   ├── VoiceButton             # Left panel
-    │   │   ├── Magnetic Area
-    │   │   ├── Animated Rings (×3)
-    │   │   ├── Mic Button
-    │   │   ├── WaveformVisualizer
-    │   │   ├── Status Text
-    │   │   └── Transcript Display
-    │   │
-    │   └── Output Panel            # Right panel
-    │       ├── ExplanationDisplay
-    │       │   ├── Topic Header + Badges
-    │       │   ├── Typewriter Text
-    │       │   └── Speak / Dismiss Actions
-    │       │
-    │       └── QuizDisplay
-    │           ├── Progress Bar
-    │           ├── Timer (SVG circle)
-    │           ├── Options Grid (2×2)
-    │           └── Results Card + Confetti
-    │
-    └── SessionHistory              # Slide-out sidebar
-        └── History Items (clickable replay)
+ CustomCursor                    # Global custom cursor overlay
+ Home (page.js)                  # Main application state manager
+     Header                      # Navigation + controls
+        Mode Toggle (Explain/Quiz)
+        Language Selector
+        Grade Selector
+        Health Status Indicator
+    
+     Split Layout
+        VoiceButton             # Left panel
+           Magnetic Area
+           Animated Rings (×3)
+           Mic Button
+           WaveformVisualizer
+           Status Text
+           Transcript Display
+       
+        Output Panel            # Right panel
+            ExplanationDisplay
+               Topic Header + Badges
+               Typewriter Text
+               Speak / Dismiss Actions
+           
+            QuizDisplay
+                Progress Bar
+                Timer (SVG circle)
+                Options Grid (2×2)
+                Results Card + Confetti
+    
+     SessionHistory              # Slide-out sidebar
+         History Items (clickable replay)
 ```
 
 ### State Management
@@ -603,7 +603,7 @@ const [history, setHistory]         = useState([])             // Session histor
 
 ---
 
-## 🪝 Custom Hooks Reference
+## Custom Hooks Reference
 
 ### `useVoiceRecognition({ lang, silenceTimeout })`
 
@@ -666,7 +666,7 @@ Applies a 3D perspective tilt effect to any element.
 
 ---
 
-## 🎨 Design System
+## Design System
 
 ### Color Tokens
 
@@ -706,7 +706,7 @@ Applies a 3D perspective tilt effect to any element.
 
 ---
 
-## 🐳 Deployment
+## Deployment
 
 ### Docker (Backend)
 
@@ -739,31 +739,31 @@ npm start
 ### Production Architecture
 
 ```
-                    ┌─────────────────┐
-                    │   Reverse Proxy  │
-                    │   (Nginx/Caddy) │
-                    └───────┬─────────┘
-                            │
-              ┌─────────────┴─────────────┐
-              │                           │
-     ┌────────▼────────┐        ┌────────▼────────┐
-     │  Next.js Server │        │  FastAPI Server  │
-     │   (Port 3000)   │        │   (Port 7860)    │
-     │                 │        │                  │
-     │  Static Assets  │        │  /explain        │
-     │  SSR Pages      │        │  /quiz           │
-     │  React Client   │        │  /command         │
-     └─────────────────┘        └────────┬─────────┘
-                                         │
-                                ┌────────▼────────┐
-                                │   Cohere API    │
-                                │  (External)     │
-                                └─────────────────┘
+                    
+                       Reverse Proxy  
+                       (Nginx/Caddy) 
+                    
+                            
+              
+                                         
+             
+       Next.js Server           FastAPI Server  
+        (Port 3000)              (Port 7860)    
+                                                
+       Static Assets            /explain        
+       SSR Pages                /quiz           
+       React Client             /command         
+             
+                                         
+                                
+                                   Cohere API    
+                                  (External)     
+                                
 ```
 
 ---
 
-## ⚡ Performance Considerations
+## Performance Considerations
 
 | Area | Optimization |
 |------|-------------|
@@ -777,7 +777,7 @@ npm start
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 ### Development Workflow
 
@@ -796,7 +796,7 @@ npm start
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **Apache License 2.0** — see the [LICENSE](LICENSE) file for details.
 
@@ -804,8 +804,8 @@ This project is licensed under the **Apache License 2.0** — see the [LICENSE](
 
 <div align="center">
 
-**Built with ❤️ for Indian Classrooms**
+**Built with  for Indian Classrooms**
 
-*Shiksha AI — Kyunki har bachche ka haq hai acchi education* 🇮🇳
+*Shiksha AI — Kyunki har bachche ka haq hai acchi education* 
 
 </div>
