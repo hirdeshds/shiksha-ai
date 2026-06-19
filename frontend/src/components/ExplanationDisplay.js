@@ -17,7 +17,7 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
       return {
         title: topic,
         concept: explanation,
-        analogy: "",
+        Similarity: "",
         key_points: [],
         vocabulary: [],
         fun_fact: "",
@@ -27,7 +27,7 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
     return explanation || {};
   }, [explanation, topic]);
 
-  const { title, concept, analogy, key_points, vocabulary, fun_fact } = explanationObj;
+  const { title, concept, Similarity, key_points, vocabulary, fun_fact } = explanationObj;
   const explanationText = concept || "";
   const isHindi = language === "Hindi";
 
@@ -35,8 +35,8 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
     let textToSpeak = `${title || topic}. `;
     if (concept) textToSpeak += `${concept}. `;
 
-    if (analogy && analogy !== "N/A") {
-      textToSpeak += `Analogy: ${analogy}. `;
+    if (Similarity && Similarity !== "N/A") {
+      textToSpeak += `Similarity: ${Similarity}. `;
     }
 
     if (key_points && key_points.length > 0) {
@@ -55,7 +55,7 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
     }
 
     return textToSpeak;
-  }, [analogy, concept, fun_fact, key_points, title, topic, vocabulary]);
+  }, [Similarity, concept, fun_fact, key_points, title, topic, vocabulary]);
 
   useEffect(() => {
     if (isMicListening) {
@@ -170,20 +170,17 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
             </section>
           )}
 
-          {analogy && analogy !== "N/A" && (
-            <section className={styles.panelCard} data-type="analogy">
+          {Similarity && Similarity !== "N/A" && (
+            <section className={styles.panelCard} data-type="Similarity">
               <h3 className={styles.panelTitle} style={{ color: "#f43f5e" }}>
-                Analogy
+                Similarity
               </h3>
-              <p className={styles.analogyText}>{`"${analogy}"`}</p>
+              <p className={styles.SimilarityText}>{`"${Similarity}"`}</p>
             </section>
           )}
 
           {vocabulary && vocabulary.length > 0 && (
             <section className={styles.panelCard} data-type="vocabulary">
-              <h3 className={styles.panelTitle} style={{ color: "#a855f7" }}>
-                Vocabulary
-              </h3>
               <div className={styles.vocabGrid}>
                 {vocabulary.map((v, index) => (
                   <div key={index} className={styles.vocabItem}>
@@ -197,9 +194,6 @@ export default function ExplanationDisplay({ explanation, topic, language, grade
 
           {fun_fact && fun_fact !== "N/A" && (
             <section className={`${styles.panelCard} ${styles.funFactCard}`}>
-              <h3 className={styles.panelTitle} style={{ color: "#facc15" }}>
-                Fun fact
-              </h3>
               <div className={styles.funFactContent}>{fun_fact}</div>
             </section>
           )}

@@ -22,7 +22,7 @@ Format:
 {{
   "title": "A short, engaging title explaining the topic",
   "concept": "A simple paragraph explaining the concept (under 80 words)",
-  "analogy": "A relatable real-life analogy to understand the concept (under 30 words)",
+  "Similarity": "A relatable real-life Similarity to understand the concept (under 30 words)",
   "key_points": [
     "Key point 1",
     "Key point 2",
@@ -70,7 +70,7 @@ Format:
     return {
         "title": f"{topic} Explained",
         "concept": "Sorry, we could not generate a structured explanation for this topic at this time.",
-        "analogy": "N/A",
+        "Similarity": "N/A",
         "key_points": [],
         "vocabulary": [],
         "fun_fact": "N/A"

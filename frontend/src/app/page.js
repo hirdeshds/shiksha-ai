@@ -75,7 +75,7 @@ export default function Home() {
         setExplanation({
           title: "Error",
           concept: "⚠️ Sorry, something went wrong. Please check if the backend is running and try again.",
-          analogy: "",
+          Similarity: "",
           key_points: [],
           vocabulary: [],
           fun_fact: ""
