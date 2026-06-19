@@ -30,11 +30,11 @@ export async function explainTopic(topic, language, grade) {
   return json.data;
 }
 
-export async function generateQuiz(topic) {
+export async function generateQuiz(topic, language, grade) {
   const res = await fetch(`${API_BASE}/quiz`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ topic }),
+    body: JSON.stringify({ topic, language, grade }),
   });
 
   if (!res.ok) {

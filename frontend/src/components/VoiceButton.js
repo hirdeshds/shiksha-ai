@@ -5,7 +5,7 @@ import WaveformVisualizer from "./WaveformVisualizer";
 import styles from "./VoiceButton.module.css";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 
-export default function VoiceButton({ onCommand, isProcessing, language }) {
+export default function VoiceButton({ onCommand, isProcessing, language, onListeningChange }) {
   const recognitionLang = language === "Hindi" ? "hi-IN" : "en-IN";
 
   const {
@@ -21,6 +21,13 @@ export default function VoiceButton({ onCommand, isProcessing, language }) {
   const { playPop } = useSoundEffects();
   const magneticRef = useRef(null);
   const wrapperRef = useRef(null);
+
+  // Notify parent of listening state changes
+  useEffect(() => {
+    if (onListeningChange) {
+      onListeningChange(isListening);
+    }
+  }, [isListening, onListeningChange]);
 
   // Magnetic button effect
   useEffect(() => {

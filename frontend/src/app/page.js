@@ -16,7 +16,8 @@ export default function Home() {
   const [explanation, setExplanation] = useState(null);
   const [explanationMeta, setExplanationMeta] = useState({});
   const [quizData, setQuizData] = useState(null);
-  const [quizTopic, setQuizTopic] = useState("");
+  const [quizMeta, setQuizMeta] = useState({});
+  const [isMicListening, setIsMicListening] = useState(false);
 
   const [history, setHistory] = useState([]);
 
@@ -59,9 +60,9 @@ export default function Home() {
         if (intent === "quiz") {
           setMode("quiz");
           setExplanation(null);
-          const quiz = await generateQuiz(topic);
+          const quiz = await generateQuiz(topic, cmdLanguage, cmdGrade);
           setQuizData(quiz);
-          setQuizTopic(topic);
+          setQuizMeta({ topic, language: cmdLanguage, grade: cmdGrade });
         } else {
           setMode("explain");
           setQuizData(null);
@@ -104,17 +105,17 @@ export default function Home() {
   );
 
   const handleQuizRetry = useCallback(async () => {
-    if (!quizTopic) return;
+    if (!quizMeta.topic) return;
     setIsProcessing(true);
     try {
-      const quiz = await generateQuiz(quizTopic);
+      const quiz = await generateQuiz(quizMeta.topic, quizMeta.language, quizMeta.grade);
       setQuizData(quiz);
     } catch (error) {
       console.error("Quiz retry failed:", error);
     } finally {
       setIsProcessing(false);
     }
-  }, [quizTopic]);
+  }, [quizMeta]);
 
   const dismissExplanation = useCallback(() => {
     setExplanation(null);
@@ -123,7 +124,7 @@ export default function Home() {
 
   const dismissQuiz = useCallback(() => {
     setQuizData(null);
-    setQuizTopic("");
+    setQuizMeta({});
   }, []);
 
   return (
@@ -157,6 +158,7 @@ export default function Home() {
                 onCommand={handleCommand}
                 isProcessing={isProcessing}
                 language={language}
+                onListeningChange={setIsMicListening}
               />
             </div>
 
@@ -170,15 +172,19 @@ export default function Home() {
                       language={explanationMeta.language}
                       grade={explanationMeta.grade}
                       onDismiss={dismissExplanation}
+                      isMicListening={isMicListening}
                     />
                   )}
 
                   {quizData && (
                     <QuizDisplay
                       quizData={quizData}
-                      topic={quizTopic}
+                      topic={quizMeta.topic}
+                      language={quizMeta.language}
+                      grade={quizMeta.grade}
                       onDismiss={dismissQuiz}
                       onRetry={handleQuizRetry}
+                      isMicListening={isMicListening}
                     />
                   )}
                 </>

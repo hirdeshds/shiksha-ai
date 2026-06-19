@@ -40,7 +40,7 @@ function Confetti() {
   return <div className={styles.confettiContainer}>{pieces}</div>;
 }
 
-export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
+export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, language, grade }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -84,11 +84,12 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
     }
 
     const timeout = setTimeout(() => {
-      speak(textToSpeak, "en-IN"); // Reading in English/Hinglish
+      const lang = language === "Hindi" ? "hi-IN" : language === "English" ? "en-IN" : "hi-IN";
+      speak(textToSpeak, lang);
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [currentIndex, currentQuestion, isFinished, showResult, speak, stop]);
+  }, [currentIndex, currentQuestion, isFinished, showResult, speak, stop, language]);
 
   // Cleanup speech on unmount
   useEffect(() => {
@@ -184,11 +185,15 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
   const timerColor =
     timeLeft > 10 ? "#10b981" : timeLeft > 5 ? "#f59e0b" : "#ef4444";
 
+  const isHindi = language === "Hindi";
+
   if (!questions.length) {
     return (
       <div className={styles.questionCard} style={{ textAlign: "center" }}>
         <p style={{ color: "var(--danger)" }}>
-          ⚠️ No quiz questions were generated. Please try again.
+          {isHindi 
+            ? "⚠️ कोई क्विज़ प्रश्न नहीं बने। कृपया फिर से प्रयास करें।" 
+            : "⚠️ No quiz questions were generated. Please try again."}
         </p>
       </div>
     );
@@ -197,28 +202,46 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
   if (isFinished) {
     const percentage = Math.round((score / questions.length) * 100);
     const emoji = percentage >= 80 ? "🏆" : percentage >= 60 ? "⭐" : percentage >= 40 ? "👍" : "📚";
-    const message =
-      percentage >= 80 ? "Outstanding! Bahut badhiya!"
-        : percentage >= 60 ? "Good job! Accha kiya!"
-          : percentage >= 40 ? "Keep trying! Aur mehnat karo!"
-            : "Let's practice more! Aur padho!";
+    
+    let message = "";
+    if (language === "English") {
+      message =
+        percentage >= 80 ? "Outstanding! Well done!"
+          : percentage >= 60 ? "Good job! Well done!"
+            : percentage >= 40 ? "Keep trying! Work harder!"
+              : "Let's practice more!";
+    } else if (isHindi) {
+      message =
+        percentage >= 80 ? "शानदार! बहुत बढ़िया!"
+          : percentage >= 60 ? "अच्छा प्रयास! बहुत अच्छा!"
+            : percentage >= 40 ? "कोशिश करते रहें! और मेहनत करें!"
+              : "चलो और अभ्यास करें! और पढ़ें!";
+    } else {
+      message =
+        percentage >= 80 ? "Outstanding! Bahut badhiya!"
+          : percentage >= 60 ? "Good job! Accha kiya!"
+            : percentage >= 40 ? "Keep trying! Aur mehnat karo!"
+              : "Let's practice more! Aur padho!";
+    }
 
     return (
       <>
         {showConfetti && <Confetti />}
         <div className={styles.resultsCard} ref={cardRef}>
           <div className={styles.resultsEmoji}>{emoji}</div>
-          <h2 className={styles.resultsTitle}>Quiz Complete!</h2>
+          <h2 className={styles.resultsTitle}>
+            {isHindi ? "क्विज़ समाप्त!" : "Quiz Complete!"}
+          </h2>
           <div className={styles.resultsScore}>
             {score}/{questions.length}
           </div>
           <p className={styles.resultsSubtext}>{message}</p>
           <div className={styles.resultsActions}>
             <button className={styles.retryBtn} onClick={() => { playPop(); onRetry(); }}>
-              Try Again
+              {isHindi ? "फिर से खेलें" : "Try Again"}
             </button>
             <button className={styles.closeBtn} onClick={() => { playPop(); onDismiss(); }}>
-              Close
+              {isHindi ? "बंद करें" : "Close"}
             </button>
           </div>
         </div>
@@ -231,9 +254,13 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
       <div className={styles.progressSection}>
         <div className={styles.progressHeader}>
           <span className={styles.progressLabel}>
-            Question {currentIndex + 1} of {questions.length}
+            {isHindi 
+              ? `प्रश्न ${currentIndex + 1} / ${questions.length}` 
+              : `Question ${currentIndex + 1} of ${questions.length}`}
           </span>
-          <span className={styles.scoreLabel}>Score: {score}</span>
+          <span className={styles.scoreLabel}>
+            {isHindi ? `स्कोर: ${score}` : `Score: ${score}`}
+          </span>
         </div>
         <div className={styles.progressBar}>
           <div
@@ -247,7 +274,7 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry }) {
         <div className={styles.cardContent}>
           <div className={styles.questionHeader}>
             <span className={styles.questionNumber}>
-              Question {currentIndex + 1}
+              {isHindi ? `प्रश्न ${currentIndex + 1}` : `Question ${currentIndex + 1}`}
             </span>
             <div className={styles.timer}>
               <svg className={styles.timerSvg} viewBox="0 0 48 48">

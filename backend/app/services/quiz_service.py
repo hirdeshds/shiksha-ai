@@ -1,17 +1,25 @@
 import json
 from app.core.cohere_client import co
 
-def generate_quiz(topic):
+def generate_quiz(topic, language, grade):
 
     prompt = f"""
-Generate 5 MCQs about:
+You are a teaching assistant in a Haryana government school.
+Generate 5 MCQs about the topic: {topic}
+Class/Grade level: {grade}
+Language: {language}
 
-{topic}
+Rules:
+- If language is Hindi, generate the questions, options, and answer in Hindi.
+- If language is English, generate the questions, options, and answer in English.
+- If language is Hinglish, mix Hindi and English naturally (e.g., use English/Latin script but mix Hindi and English words naturally, just like spoken Hinglish).
+- Make sure the content difficulty and vocabulary are suitable for Class {grade}.
+- Provide exactly 4 options for each question.
+- The "answer" field must contain the exact string matching one of the options.
 
 Return JSON only.
 
 Format:
-
 {{
  "questions":[
    {{
@@ -23,6 +31,8 @@ Format:
 }}
 """
 
+    print(f"PROMPT SENT TO COHERE:\n{prompt}")
+
     response = co.chat(
         model="command-a-plus-05-2026",
         messages=[
@@ -33,6 +43,8 @@ Format:
         ],
         response_format={"type": "json_object"}
     )
+
+    # Removed print of raw response to avoid UnicodeEncodeError in console
 
     for item in response.message.content:
         if item.type == "text":
