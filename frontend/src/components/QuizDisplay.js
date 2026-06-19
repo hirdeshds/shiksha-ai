@@ -40,7 +40,7 @@ function Confetti() {
   return <div className={styles.confettiContainer}>{pieces}</div>;
 }
 
-export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, language, grade }) {
+export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, language, grade, isMicListening }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -73,7 +73,7 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, langu
   useEffect(() => {
     stop(); // Always stop previous speech when state changes
 
-    if (isFinished || showResult || !currentQuestion) return;
+    if (isFinished || showResult || !currentQuestion || isMicListening) return;
 
     const labels = ["A", "B", "C", "D"];
     let textToSpeak = `Question ${currentIndex + 1}. ${currentQuestion.question}. `;
@@ -89,7 +89,7 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, langu
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [currentIndex, currentQuestion, isFinished, showResult, speak, stop, language]);
+  }, [currentIndex, currentQuestion, isFinished, showResult, speak, stop, language, isMicListening]);
 
   // Cleanup speech on unmount
   useEffect(() => {

@@ -5,12 +5,34 @@ import { useTilt } from "@/hooks/useTilt";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 import styles from "./ExplanationDisplay.module.css";
 
-export default function ExplanationDisplay({ explanation, topic, language, grade, onDismiss }) {
+export default function ExplanationDisplay({ explanation, topic, language, grade, onDismiss, isMicListening }) {
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
   const { speak, stop, isSpeaking } = useSpeechSynthesis();
   const indexRef = useRef(0);
   const { playPop } = useSoundEffects();
+  const wasSpeakingRef = useRef(false);
+
+  // Mute explanation reading if mic becomes active, and restart it when mic stops
+  useEffect(() => {
+    if (isMicListening) {
+      if (isSpeaking) {
+        wasSpeakingRef.current = true;
+        stop();
+      }
+    } else {
+      if (wasSpeakingRef.current) {
+        wasSpeakingRef.current = false;
+        const lang = language === "Hindi" ? "hi-IN" : language === "English" ? "en-IN" : "hi-IN";
+        speak(explanationText, lang);
+      }
+    }
+  }, [isMicListening, isSpeaking, speak, stop, explanationText, language]);
+
+  // Cleanup speech on unmount
+  useEffect(() => {
+    return () => stop();
+  }, [stop]);
 
   // Apply 3D tilt effect
   const cardRef = useTilt({ max: 8, scale: 1.01 });
