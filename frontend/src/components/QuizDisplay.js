@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useTilt } from "@/hooks/useTilt";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import styles from "./QuizDisplay.module.css";
@@ -40,7 +39,7 @@ function Confetti() {
   return <div className={styles.confettiContainer}>{pieces}</div>;
 }
 
-export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, language, grade, isMicListening }) {
+export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, language, grade, isMicListening, isProcessing }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -50,7 +49,6 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, langu
   const [showConfetti, setShowConfetti] = useState(false);
 
   const timerRef = useRef(null);
-  const cardRef = useTilt({ max: 5, scale: 1.01 });
   const { playPop, playCorrect, playWrong } = useSoundEffects();
   const { speak, stop } = useSpeechSynthesis();
 
@@ -73,7 +71,7 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, langu
   useEffect(() => {
     stop(); // Always stop previous speech when state changes
 
-    if (isFinished || showResult || !currentQuestion || isMicListening) return;
+    if (isFinished || showResult || !currentQuestion || isMicListening || isProcessing) return;
 
     const labels = ["A", "B", "C", "D"];
     let textToSpeak = `Question ${currentIndex + 1}. ${currentQuestion.question}. `;
@@ -89,7 +87,7 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, langu
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [currentIndex, currentQuestion, isFinished, showResult, speak, stop, language, isMicListening]);
+  }, [currentIndex, currentQuestion, isFinished, showResult, speak, stop, language, isMicListening, isProcessing]);
 
   // Cleanup speech on unmount
   useEffect(() => {
@@ -227,7 +225,7 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, langu
     return (
       <>
         {showConfetti && <Confetti />}
-        <div className={styles.resultsCard} ref={cardRef}>
+        <div className={styles.resultsCard}>
           <div className={styles.resultsEmoji}>{emoji}</div>
           <h2 className={styles.resultsTitle}>
             {isHindi ? "क्विज़ समाप्त!" : "Quiz Complete!"}
@@ -270,7 +268,7 @@ export default function QuizDisplay({ quizData, topic, onDismiss, onRetry, langu
         </div>
       </div>
 
-      <div className={styles.questionCard} ref={cardRef} key={currentIndex}>
+      <div className={styles.questionCard} key={currentIndex}>
         <div className={styles.cardContent}>
           <div className={styles.questionHeader}>
             <span className={styles.questionNumber}>

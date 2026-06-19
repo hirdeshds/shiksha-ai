@@ -1,120 +1,251 @@
 .explanationCard {
   width: 100%;
-  flex: 1;
-  padding: 2.5rem;
-  border-radius: var(--radius-card);
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-style: preserve-3d;
-  transition: box-shadow 0.3s ease;
+  max-height: min(72vh, 760px);
+  min-height: 520px;
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(10, 1, 3, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
-}
-
-.explanationCard:hover {
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
-}
-
-/* The red hover expansion effect from Masai */
-.explanationCard::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 150%;
-  height: 150%;
-  background: var(--bg-secondary);
-  border-radius: 50%;
-  transform: scale(0) translate(50%, 50%);
-  transform-origin: bottom right;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.explanationCard:hover::before {
-  transform: scale(1) translate(20%, 20%);
-}
-
-.cardContent {
-  position: relative;
-  z-index: 1;
-  transform: translateZ(30px);
-  /* Pushes content forward for 3D effect */
+  overflow: hidden;
 }
 
 .cardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
   gap: 1rem;
+  padding: 1.2rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+  flex-shrink: 0;
 }
 
 .topicSection {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.9rem;
+  min-width: 0;
 }
 
 .topicIcon {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-subcard);
-  background: var(--bg-primary);
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(237, 3, 49, 0.95), rgba(56, 189, 248, 0.8));
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  border: 1px solid var(--border-light);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  font-size: 0.82rem;
+  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  flex-shrink: 0;
+}
+
+.panelEyebrow {
+  display: block;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
 }
 
 .topicName {
-  font-size: 1.8rem;
-  color: var(--text-primary);
-  letter-spacing: -0.5px;
+  color: var(--text-inverse);
+  font-size: 1.28rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 
 .badges {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .badge {
-  padding: 0.4rem 1rem;
+  padding: 0.42rem 0.75rem;
   border-radius: var(--radius-pill);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
 }
 
 .langBadge {
-  background: var(--bg-secondary);
-  color: var(--primary);
-  border: 1px solid var(--primary-light);
+  color: #93c5fd;
+  border-color: rgba(147, 197, 253, 0.3);
+  background: rgba(96, 165, 250, 0.08);
 }
 
 .gradeBadge {
-  background: var(--success-light);
-  color: var(--success);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border-color: rgba(110, 231, 183, 0.28);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+.cardContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cardContent::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.primaryPanel,
+.panelCard {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.primaryPanel {
+  padding: 1.15rem;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.panelCard {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.panelCard[data-type="vocabulary"],
+.funFactCard {
+  grid-column: 1 / -1;
+}
+
+.panelTitle {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+  text-transform: uppercase;
 }
 
 .explanationText {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.88);
   white-space: pre-wrap;
-  min-height: 60px;
-  flex: 1;
-  overflow-y: auto;
+  min-height: 72px;
+}
+
+.analogyText {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.58;
+  padding-left: 0.85rem;
+  border-left: 2px solid rgba(244, 63, 94, 0.78);
+}
+
+.pointsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.62rem;
+}
+
+.pointItem {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 0.62rem;
+  align-items: start;
+  padding: 0.7rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pointMarker {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 185, 129, 0.16);
+  color: #6ee7b7;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.pointText {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.vocabGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.vocabItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.72rem;
+  border-radius: 14px;
+  background: rgba(168, 85, 247, 0.075);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+}
+
+.vocabTerm {
+  color: #d8b4fe;
+  font-size: 0.86rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.vocabDefinition,
+.funFactContent {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.funFactCard {
+  background: rgba(250, 204, 21, 0.055);
+  border-color: rgba(250, 204, 21, 0.16);
 }
 
 .cursor {
@@ -127,91 +258,61 @@
   animation: blink 0.7s ease-in-out infinite;
 }
 
-.imageContainer {
-  margin: 1.5rem 0;
-  border-radius: var(--radius-subcard);
-  overflow: hidden;
-  max-height: 250px;
-  background: var(--bg-secondary, #f8f9fa);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.topicImage {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  max-height: 250px;
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
-}
-
 .cardFooter {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border-light);
+  gap: 0.8rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+  flex-shrink: 0;
+}
+
+.speakBtn,
+.dismissBtn {
+  min-height: 40px;
+  border-radius: var(--radius-pill);
+  padding: 0.65rem 1rem;
+  font-size: 0.86rem;
+  font-weight: 800;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
 .speakBtn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.5rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--primary);
-  background: transparent;
-  color: var(--primary);
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  cursor: none;
+  border: 1px solid rgba(237, 3, 49, 0.95);
+  background: rgba(237, 3, 49, 0.08);
+  color: #ff5775;
 }
 
 .speakBtn:hover {
-  background: var(--primary);
+  background: rgba(237, 3, 49, 0.95);
+  border-color: rgba(237, 3, 49, 0.95);
   color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(237, 3, 49, 0.15);
+  transform: translateY(-1px);
 }
 
 .speakBtn[data-speaking="true"] {
-  background: var(--primary-dark);
+  background: rgba(237, 3, 49, 0.95);
   color: white;
-  border-color: transparent;
 }
 
 .dismissBtn {
-  padding: 0.8rem 1.5rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border-light);
-  background: white;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  cursor: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .dismissBtn:hover {
-  background: #f8f8f8;
-  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(40px) scale(0.98);
+    transform: translateY(18px) scale(0.985);
   }
-
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -219,27 +320,49 @@
 }
 
 @keyframes blink {
-
   0%,
   100% {
     opacity: 1;
   }
-
   50% {
     opacity: 0;
   }
 }
 
+@media (max-width: 1024px) {
+  .detailGrid,
+  .vocabGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   .explanationCard {
-    padding: 1.5rem;
+    max-height: 62vh;
+    min-height: 420px;
+    border-radius: 22px;
+  }
+
+  .cardHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1rem;
   }
 
   .topicName {
-    font-size: 1.3rem;
+    font-size: 1.05rem;
+  }
+
+  .cardContent {
+    padding: 0.8rem;
+  }
+
+  .primaryPanel,
+  .panelCard {
+    border-radius: 16px;
   }
 
   .explanationText {
-    font-size: 1rem;
+    font-size: 0.92rem;
   }
 }

@@ -10,8 +10,8 @@ Class/Grade level: {grade}
 Language: {language}
 
 Rules:
-- If language is Hindi, generate the questions, options, and answer in Hindi.
-- If language is English, generate the questions, options, and answer in English.
+- If language is Hindi, generate the questions, options, and answer entirely in Hindi Devanagari script.
+- If language is English, generate the questions, options, and answer ENTIRELY in English. DO NOT use any Hindi or Hinglish words.
 - If language is Hinglish, mix Hindi and English naturally (e.g., use English/Latin script but mix Hindi and English words naturally, just like spoken Hinglish).
 - Make sure the content difficulty and vocabulary are suitable for Class {grade}.
 - Provide exactly 4 options for each question.

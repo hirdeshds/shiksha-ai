@@ -73,8 +73,12 @@ export default function Home() {
       } catch (error) {
         console.error("Command processing failed:", error);
         setExplanation({
-          text: "⚠️ Sorry, something went wrong. Please check if the backend is running and try again.",
-          image_url: null
+          title: "Error",
+          concept: "⚠️ Sorry, something went wrong. Please check if the backend is running and try again.",
+          analogy: "",
+          key_points: [],
+          vocabulary: [],
+          fun_fact: ""
         });
         setExplanationMeta({ topic: "Error", language, grade });
       } finally {
@@ -185,6 +189,7 @@ export default function Home() {
                       onDismiss={dismissQuiz}
                       onRetry={handleQuizRetry}
                       isMicListening={isMicListening}
+                      isProcessing={isProcessing}
                     />
                   )}
                 </>
